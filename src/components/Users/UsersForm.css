@@ -1,15 +1,26 @@
 label{
-  margin: 0 20px;
+	margin: 0 20px;
+}
+legend{
+	font-size: 20px;
+}
+#users-form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 .field-container{
-  margin: 20px;
-  display: flex;
-  justify-content: space-between;
+	margin: 20px;
+	font-size: 30px;
+	display: flex;
+	justify-content: center;
 }
 .group-container{
-  margin: 20px;
+	margin: 20px;
+	max-width: 70%;
+	min-width: 30%;
 }
 .btn-group{
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }

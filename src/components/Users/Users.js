@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import UserForm from './UserForm';
 import UsersList from './UsersList';
 import UserAlbums from './UserAlbums';
 import AlbumPhotos from '../Albums/AlbumPhotos';
 import './UsersList.css';
+import dataService from '../../API/data-service';
 
 function Users() {
+
+	const [users, setUsers] = useState([]);
+
+
+	useEffect(() => {
+		dataService.get('/users')
+			.then(({data}) => setUsers(data))
+			.catch((error) => console.log(error))
+	}, [])
 
 	const {url, path} = useRouteMatch();
 
 	return (
 		<>
-			<nav className='nav-user'>
-				<NavLink
-					to={`${url}/add`}
-				>
-					Add
-				</NavLink>
+			<nav>
+				<NavLink to={`${url}/add`} style={{fontSize:'20px', margin:'auto'}}>Add</NavLink>
 			</nav>
 			<Switch>
 				<Route path={`${path}`} exact>
-					<UsersList />
+					<UsersList users={users} />
 				</Route>
 				<Route path={`${path}/add/:id`}>
-					<UserForm />
+					<UserForm users={users} />
 				</Route>
 				<Route path={`${path}/add/`}>
 					<Redirect to={`${path}/add/:id`}>

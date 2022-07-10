@@ -31,7 +31,11 @@
   flex-direction: column;
   align-content: space-between;
   justify-content: center;
+	min-width: 90%;
+  max-width: 800px;
 }
+
+
 .nav-user{
   min-width: 90%;
   max-width: 800px;
