@@ -1,16 +1,16 @@
 import React from 'react'
 import { Link, useRouteMatch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deleteUserAction } from '../../store/actions/usersActions';
+
 
 function UsersList({users}) {
 
-	// const [users, setUsers] = useState([]);
 	const {url} = useRouteMatch();
-
-	// useEffect(() => {
-	// 	dataService.get('/users')
-	// 		.then(({data}) => setUsers(data))
-	// 		.catch((error) => console.log(error))
-	// }, [])
+	const dispatch = useDispatch();
+	const onDelete = (id) => {
+		dispatch(deleteUserAction(id));
+	}
 
 	return (
 		<ul className="users-container">{users.map(user=>{
@@ -25,7 +25,11 @@ function UsersList({users}) {
 					<Link to={`${url}/add/${user.id}`}>
 						<p id="edit" className="fa fa-pencil"></p>
 					</Link>
-					<p id="del" className="fa fa-trash-o"></p>
+					<p
+					id="del"
+					className="fa fa-trash-o"
+					onClick={() => onDelete(user.id)}
+					></p>
 				</li>
 			)
 		})}

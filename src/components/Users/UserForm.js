@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import {emptyUser} from '../../model/model';
@@ -11,7 +11,13 @@ function UserForm({users}) {
 	const [editUser, setEditUser] = useState(currentUser ? currentUser : emptyUser);
 	const history = useHistory();
 
-	const onInputChange = (e) => {setEditUser({...emptyUser,[e.target.name]: e.target.value})}
+	const onInputChange = (e) => {
+		const newUser = {
+				...editUser,
+				[e.target.name]: e.target.value
+			}
+		setEditUser(newUser);
+	}
 	const onReset = () =>setEditUser(emptyUser);
 	const goHome = () => history.push('/users');
 

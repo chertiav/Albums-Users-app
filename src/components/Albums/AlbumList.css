@@ -1,15 +1,15 @@
-*{
+* {
   box-sizing: border-box;
 }
-.albums-container{
+.albums-container,
+.albums-photos {
   display: flex;
   flex-direction: column;
 }
-.album-item{
+.album-item,
+.photos-item {
   padding: 5px;
   margin: 5px;
   border: 3px solid black;
-  min-width: 90%;
-  max-height: 60px;
-  font-size: 15px;
+  font-size: 20px;
 }

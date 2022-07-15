@@ -1,7 +1,7 @@
-.active{
-  color: red
+.active {
+  color: red;
 }
-.container {
+#root {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -9,17 +9,18 @@
   align-items: center;
   font-size: 30px;
 }
-.header{
+.header {
   margin: 10px;
+  max-width: 900px;
 }
-.selected{
+.selected {
   color: teal;
 }
-ul{
+ul {
   display: flex;
 }
-li{
-  margin: 20px;
+li {
+  margin: 0px 10px;
   font-size: 30px;
   list-style: none;
 }

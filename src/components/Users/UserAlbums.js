@@ -17,9 +17,6 @@ function UserAlbums() {
 	return (
 		<ul className="albums-container">
 			{albums.map(({id, title}) =>
-				// <NavLink to={`/albums/${id}`} key={id}>
-				// 	<li className="album-item">{title}</li>
-				// </NavLink>
 				<li className="album-item" key={id}>
 					<NavLink to={`/albums/${id}`}>{title}</NavLink>
 				</li>

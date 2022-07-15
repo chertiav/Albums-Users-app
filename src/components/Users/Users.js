@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import UserForm from './UserForm';
 import UsersList from './UsersList';
 import UserAlbums from './UserAlbums';
 import AlbumPhotos from '../Albums/AlbumPhotos';
 import './UsersList.css';
-import dataService from '../../API/data-service';
+import { fetchAllUsersAction } from '../../store/actions/usersActions';
 
 function Users() {
 
-	const [users, setUsers] = useState([]);
 
+	const {usersList: {users}} =useSelector(state => state)
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dataService.get('/users')
-			.then(({data}) => setUsers(data))
-			.catch((error) => console.log(error))
-	}, [])
+		dispatch(fetchAllUsersAction())
+	}, [dispatch])
 
 	const {url, path} = useRouteMatch();
 
 	return (
 		<>
-			<nav>
-				<NavLink to={`${url}/add`} style={{fontSize:'20px', margin:'auto'}}>Add</NavLink>
+			<nav className='header'>
+				<NavLink to={`${url}/add`}>Add</NavLink>
 			</nav>
 			<Switch>
 				<Route path={`${path}`} exact>
