@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import Stack from '@mui/material/Stack';
@@ -8,9 +9,11 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import {emptyUser} from '../../model/model';
 import './UsersForm.css'
+import { createUserAction, updateUserAction } from '../../store/actions/usersActions';
 
 function UserForm({users}) {
 
+	const dispatch = useDispatch()
 	const {id} = useParams();
 	const currentUser = users.find((user) => user.id === parseInt(id));
 	const history = useHistory();
@@ -34,23 +37,21 @@ function UserForm({users}) {
 	})
 
 	const onFormikSubmit = (values, actions) => {
-		setTimeout(() => { actions.setSubmitting(false) }, 2000)
+		// setTimeout(() => { actions.setSubmitting(false) }, 2000)
+		console.log(values);
 		!values.id
-			? console.log('createUserAction', values)
-			: console.log('updateUserAction', values);
-		actions.resetForm();
-		// goHome();
+			? dispatch(createUserAction({...values, id: Date.now()}))
+			: dispatch(updateUserAction(values));
+		// actions.resetForm();
+		goHome();
 	}
 
-	const renderForm = (
-		props
-		// {values, isSubmitting, errors}
-		) => {
-		console.log(props.errors);
+	const renderForm = (props) => {
 		return (
 			<Form id="users-form">
-				<ErrorMessage name='name'/>
-				{/* { props.errors.name && props.touched.name && <div>{props.errors.name}</div> } */}
+				{ErrorMessage
+					? <div className="error"><ErrorMessage name='name'/></div>
+					: null}
 				<div className="field-container">
 					<label htmlFor='name'>Name</label>
 					<Field name='name' placeholder='Name'/>
@@ -61,8 +62,9 @@ function UserForm({users}) {
 							<label htmlFor='email'>Email</label>
 							<Field name='email' placeholder='Email'/>
 						</div>
-						<ErrorMessage name='email'/>
-						{/* { props.errors.email && props.touched.email && <div>{ props.errors.email}</div> } */}
+						{ErrorMessage
+							? <div className="error"><ErrorMessage name='email'/></div>
+							: null}
 						<div className="field-container">
 							<label htmlFor='phone'>Phone</label>
 							<Field name='phone' placeholder='Phone'/>
@@ -74,8 +76,9 @@ function UserForm({users}) {
 							<label htmlFor='city'>City</label>
 							<Field name='address.city' placeholder='City'/>
 						</div>
-						<ErrorMessage name='address.city'/>
-						{/* { props.errors.address.city && props.touched.address.city && <div>{ props.errors.address.city}</div> } */}
+						{ErrorMessage
+							? <div className="error"><ErrorMessage name='address.city'/></div>
+							: null}
 						<div className="field-container">
 							<label htmlFor='street'>Street</label>
 							<Field name='address.street' placeholder='Street'/>
@@ -89,7 +92,6 @@ function UserForm({users}) {
 					<Stack
 						direction='row'
 						spacing = {8}
-
 					>
 						<Button
 							variant="contained"
@@ -97,16 +99,12 @@ function UserForm({users}) {
 							color = 'success'
 							type='submit'
 							style={{backgroundColor:'teal'}}
-							// className='save-btn'
 							disabled={ props.isSubmitting}
 							startIcon={<SaveIcon/>}
 						>Save</Button>
 						<Button
-							// type='button'
 							variant="contained"
 							type='reset'
-							// onClick={onReset}
-
 						>Reset</Button>
 						<Button
 							type='button'
@@ -124,8 +122,6 @@ function UserForm({users}) {
 			initialValues={currentUser ? currentUser : emptyUser}
 			onSubmit={onFormikSubmit}
 			validationSchema={schemaForm}
-			// validate={validateForm}
-			// validateOnBlur={false}
 		>
 		{renderForm}
 		</Formik>

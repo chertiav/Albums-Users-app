@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
-import dataService from '../../API/data-service';
+import { fetchAllUsersAlbumsAction } from '../../store/actions/albumsActions';
+
 
 function UserAlbums() {
 
-
-	const [albums, setAlbums] = useState([]);
-	const {id} = useParams()
+	const {albumsList: {albums}} = useSelector(state => state);
+	const dispatch = useDispatch();
+	const {id} = useParams();
 
 	useEffect(() => {
-		dataService.get(`/albums?userId=${id}`)
-			.then(({data}) => setAlbums(data))
-			.catch((error) => console.log(error))
-	}, [id])
+		console.log(id);
+		dispatch(fetchAllUsersAlbumsAction(id))
+	}, [dispatch, id])
 
 	return (
 		<ul className="albums-container">

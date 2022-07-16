@@ -15,7 +15,7 @@ export function* getAllUsers(){
 export function* deleteUser({payload}){
 	yield put(deleteUserRequest());
 	try {
-		yield dataService.delete(`/${payload}`);
+		yield dataService.delete(`/users/${payload}`);
 		yield put(deleteUserSuccess(payload));
 	} catch (error) {
 		yield put(deleteUserError(error))
@@ -24,7 +24,7 @@ export function* deleteUser({payload}){
 export function* createUser({payload}){
 	yield put(createUserRequest());
 	try {
-		const newUser = yield dataService.post(`/`, payload).then(({data}) => data);
+		const newUser = yield dataService.post(`/users`, payload).then(({data}) => data);
 		yield put(createUserSuccess(newUser));
 	} catch (error) {
 		yield put(createUserError(error))
@@ -33,7 +33,7 @@ export function* createUser({payload}){
 export function* updateUser({payload}){
 	yield put(updateUserRequest());
 	try {
-		yield dataService.put(`/${payload.id}`, payload);
+		yield dataService.put(`/users/${payload.id}`, payload);
 		yield put(updateUserSuccess(payload));
 	} catch (error) {
 		yield put(updateUserError(error))

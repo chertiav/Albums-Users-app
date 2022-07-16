@@ -8,7 +8,7 @@ const initialState = {
 
 const albumsReducer = (state = initialState, {type, payload}) => {
 	switch (type) {
-	//Geting
+	//Geting all albums
 	case ACTION_TYPES.GET_ALBUMS_SUCCESS:
 		return {
 			...state,
@@ -26,7 +26,25 @@ const albumsReducer = (state = initialState, {type, payload}) => {
 			isFetching: false,
 			error: payload
 		}
-		default: return state;
+	//Getting all the user's albums
+	case ACTION_TYPES.GET_ALL_USERS_ALBUMS_REQUEST:
+		return {
+			...state,
+			isFetching: true
+		}
+	case  ACTION_TYPES.GET_ALL_USERS_ALBUMS_SUCCESS:
+		return {
+			...state,
+			albums: payload,
+			isFetching: false,
+		}
+	case ACTION_TYPES.GET_ALL_USERS_ALBUMS_ERROR:
+		return {
+			...state,
+			isFetching: false,
+			error: payload
+		}
+	default: return state;
 	}
 }
 export default albumsReducer;
