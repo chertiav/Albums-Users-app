@@ -26,9 +26,10 @@ legend {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  /* flex-direction: row; */
 }
 
-.btn-group button {
+.btn {
   padding: 5px;
   font-size: 20px;
 }
